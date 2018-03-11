@@ -10,12 +10,17 @@ and open the template in the editor.
         <link href ="TestCSS.css" rel="stylesheet"/>
     </head>
     <body>
+        <canvas id="canvas"> </canvas>
         <h1 id = "Title"> Color Code </h1>
         <button id="button" onClick="disappear()">Start</button>
         <p id ="countdown"> 3 </p>
         <script>
             var countNum;
+            var c;
             window.onload=function(){
+                c = document.getElementById("canvas");
+                c.style.width = window.innerWidth;
+                c.style.height=window.innerHeight;
                 var countdown = document.getElementById("countdown");
                 countdown.style.display="none";
                 countNum = 4;
@@ -44,6 +49,12 @@ and open the template in the editor.
             function startGame(){
                 var countdown = document.getElementById("countdown");
                 countdown.style.display="none";
+                var ctx = c.getContext("2d");
+                ctx.beginPath();
+                ctx.lineWidth="6";
+                ctx.strokeStyle="red";
+                ctx.rect(50, 70, 100, 100);
+                ctx.stroke();
             }
         </script>
     </body>
