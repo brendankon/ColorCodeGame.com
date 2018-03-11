@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Color Code </title>
+        <link href ="TestCSS.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <h1 id = "Title"> Color Code </h1>
+        <button id="button" onClick="disappear()">Start</button>
+        <p id ="countdown"> 3 </p>
+        <script>
+            var countNum;
+            window.onload=function(){
+                var countdown = document.getElementById("countdown");
+                countdown.style.display="none";
+                countNum = 4;
+            }
+            
+            function disappear(){
+                var title = document.getElementById("Title");
+                var onClick = document.getElementById("button");
+                title.style.display="none";
+                onClick.style.display="none";
+                countDown();
+            }
+   
+            function countDown(){
+                if(countNum === 1)
+                    startGame();
+                else{
+                    var countdown = document.getElementById("countdown");
+                    countdown.style.display="block";
+                    countNum--;
+                    countdown.innerHTML = countNum;
+                    setTimeout(countDown, 1000);
+                }
+            }
+            
+            function startGame(){
+                var countdown = document.getElementById("countdown");
+                countdown.style.display="none";
+            }
+        </script>
+    </body>
+</html>
