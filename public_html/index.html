@@ -10,16 +10,12 @@ and open the template in the editor.
         <link href ="TestCSS.css" rel="stylesheet"/>
     </head>
     <body>
-        <canvas id="canvas"></canvas>
         <h1 id = "Title"> Color Code </h1>
         <button id="button" onClick="disappear()">Start</button>
-        <p id ="countdown"> 3 </p>
+        <p id ="countdown"> </p>
         <script>
             var countNum;
-            var c;
             window.onload=function(){
-                c = document.getElementById("canvas");
-                c.style.display = "none";
                 var countdown = document.getElementById("countdown");
                 countdown.style.display="none";
                 countNum = 4;
@@ -48,16 +44,38 @@ and open the template in the editor.
             function startGame(){
                 var countdown = document.getElementById("countdown");
                 countdown.style.display="none";
-                c.style.display="block";
-                c.style.width = window.innerWidth;
-                c.style.height = window.innerHeight;
-                var ctx = c.getContext("2d");
-                ctx.beginPath();
-                ctx.lineWidth="2";
-                ctx.strokeStyle="black";
-                ctx.rect(130, 50, 40, 40);
-                ctx.stroke();
+                var imgDiv = document.createElement("div");
+                imgDiv.style.height = "200px";
+                imgDiv.style.lineHeight = "200px";
+                imgDiv.style.transform = "translateY(+150%)";
+                imgDiv.style.textAlign = "center";
+                imgDiv.style.zIndex = "1";
+                document.body.appendChild(imgDiv);
+                for(var i = 0; i < 3; i++){
+                    var emptySquare = document.createElement("img");
+                    emptySquare.src = "http://piq.codeus.net/static/media/userpics/piq_363646.png";
+                    emptySquare.style.verticalAlign = "middle";
+                    emptySquare.style.paddingLeft = "20px";
+                    emptySquare.style.paddingRight = "20px";
+                    imgDiv.appendChild(emptySquare);
+                }
+                var letterDiv = document.createElement("div");
+                letterDiv.style.position = "relative";
+                letterDiv.style.height = "200px";
+                letterDiv.style.lineHeight = "200px";
+                letterDiv.style.transform = "translateY(+49%)";
+                letterDiv.style.textAlign = "center";
+                var letter = document.createElement("p");
+                var c = document.createTextNode("C");
+                letter.appendChild(c);
+                letter.style.verticalAlign = "middle";
+                letter.style.color = "red";
+                letter.style.font = "65px arial";
+                letterDiv.appendChild(letter);
+                letterDiv.style.zIndex = "2";
+                document.body.appendChild(letterDiv);
             }
+
         </script>
     </body>
 </html>
