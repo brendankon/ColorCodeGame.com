@@ -47,7 +47,7 @@ and open the template in the editor.
                 var imgDiv = document.createElement("div");
                 imgDiv.style.height = "200px";
                 imgDiv.style.lineHeight = "200px";
-                imgDiv.style.transform = "translateY(+150%)";
+                imgDiv.style.transform = "translateY(+120%)";
                 imgDiv.style.textAlign = "center";
                 imgDiv.style.zIndex = "1";
                 document.body.appendChild(imgDiv);
@@ -63,15 +63,20 @@ and open the template in the editor.
                 letterDiv.style.position = "relative";
                 letterDiv.style.height = "200px";
                 letterDiv.style.lineHeight = "200px";
-                letterDiv.style.transform = "translateY(+49%)";
+                letterDiv.style.transform = "translateY(+19%)";
                 letterDiv.style.textAlign = "center";
-                var letter = document.createElement("p");
-                var c = document.createTextNode("C");
-                letter.appendChild(c);
-                letter.style.verticalAlign = "middle";
-                letter.style.color = "red";
-                letter.style.font = "65px arial";
-                letterDiv.appendChild(letter);
+                for(var i = 0; i < 3; i++){
+                    var letter = document.createElement("p");
+                    var c = document.createTextNode("C");
+                    letter.style.verticalAlign = "middle";
+                    letter.style.display = "inline-block";
+                    letter.style.paddingLeft = "47px";
+                    letter.style.paddingRight = "47px";
+                    letter.style.color = "red";
+                    letter.style.font = "65px arial";
+                    letter.appendChild(c);
+                    letterDiv.appendChild(letter);
+                }
                 letterDiv.style.zIndex = "2";
                 document.body.appendChild(letterDiv);
             }
