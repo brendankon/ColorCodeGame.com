@@ -30,14 +30,21 @@ and open the template in the editor.
             var letters = [];
             var randomSquares = [];
             var randomColors = [];
+            var userGuesses = [];
+            var randomLetters = [];
+            var currentGuess = null;
+            var guessing = false;
             var scoreP;
             var scoreDiv;
+            var letterDiv;
+            var checkDiv;
             var scoreText = document.createTextNode("Score: 0");
             var score = 0;
             window.onload=function(){
                 var countdown = document.getElementById("countdown");
                 countdown.style.display="none";
                 countNum = 4;
+                document.addEventListener("keydown", keyPressed);            
             };
             
             function disappear(){
@@ -82,7 +89,7 @@ and open the template in the editor.
                     emptySquares.push(emptySquare);
                     imgDiv.appendChild(emptySquare);
                 }
-                var letterDiv = document.createElement("div");
+                letterDiv = document.createElement("div");
                 letterDiv.style.position = "relative";
                 letterDiv.style.height = "200px";
                 letterDiv.style.lineHeight = "200px";
@@ -94,10 +101,10 @@ and open the template in the editor.
                     var c = document.createTextNode(string.charAt(i));
                     letter.style.verticalAlign = "middle";
                     letter.style.display = "inline-block";
-                    letter.style.paddingLeft = "48px";
-                    letter.style.paddingRight = "48px";
+                    letter.style.paddingLeft = "52px";
+                    letter.style.paddingRight = "52px";
                     letter.style.color = currentColor[i];
-                    letter.style.font = "68px cambria";
+                    letter.style.font = "68px Impact";
                     letter.appendChild(c);
                     letters.push(letter);
                     letterDiv.appendChild(letter);
@@ -108,17 +115,17 @@ and open the template in the editor.
                 scoreDiv.style.position = "relative";
                 scoreDiv.style.height = "200px";
                 scoreDiv.style.lineHeight = "200px";
-                scoreDiv.style.transform = "translateY(-215%)";
+                scoreDiv.style.transform = "translateY(-225%)";
                 scoreDiv.style.textAlign = "center";
                 scoreDiv.style.zIndex = "3";
                 scoreP = document.createElement("p");
                 scoreP.appendChild(scoreText);
-                scoreP.style.font = "80px arial";
+                scoreP.style.font = "80px Impact";
                 scoreP.style.textAlign = "center";
                 scoreP.style.verticalAlign = "middle";
                 scoreDiv.appendChild(scoreP);
                 document.body.appendChild(scoreDiv);
-                setTimeout(userGuess, 3500);
+                setTimeout(userGuess, 4000);
             }
             
             function containsValue(value){
@@ -136,18 +143,73 @@ and open the template in the editor.
             
             function userGuess(){
                 for(var i = 0; i < 3; i++){
-                    letters[i].innerHTML = "--";
                     letters[i].style.color = "black";
                     setRandomOrder(currentSquare[Math.floor((Math.random()*3)+0)]);
                     emptySquares[i].src = randomSquares[i];
                 }
-                 
+                for(var i = 0; i < letters.length; i++){
+                    letters[i].innerHTML = "_";
+                }
+                guessing = true;
+            }
+            
+            function keyPressed(evt){
+                if(evt.keyCode >= 65 && evt.keyCode <= 90 && guessing){
+                    currentGuess = (String.fromCharCode(evt.keyCode));
+                    letters[userGuesses.length].innerHTML = currentGuess;
+                }
+                
+                else if(evt.keyCode === 13 && guessing){
+                    if(currentGuess !== null){
+                        userGuesses.push(currentGuess);
+                        currentGuess = null;
+                        if(userGuesses.length === 3){
+                            checkEquality();
+                        }
+                    }
+                }
+            }
+            
+            function checkEquality(){
+                guessing = false;
+                var equal = true;
+                checkDiv = document.createElement("div");
+                checkDiv.style.position = "relative";
+                checkDiv.style.height = "200px";
+                checkDiv.style.lineHeight = "200px";
+                checkDiv.style.transform = "translateY(-265%)";
+                checkDiv.style.textAlign = "center";
+                checkDiv.style.zIndex = "4";
+                document.body.appendChild(checkDiv);
+                for(var i = 0; i < userGuesses.length; i++){
+                    if(userGuesses[i] !== randomLetters[i]){
+                        equal = false;
+                        emptySquares[i].src = "http://piq.codeus.net/static/media/userpics/piq_307148.png";
+                    }
+                    else{
+                        emptySquares[i].src = "http://piq.codeus.net/static/media/userpics/piq_307151.png";
+                        score = score + 10;
+                    }
+                }
+                
+                if(equal){
+                    var check = document.createElement("img");
+                    check.src = "http://www.clker.com/cliparts/R/C/5/I/G/P/green-light-tick-mark-th.png";
+                    checkDiv.appendChild(check);
+                }
+                else{
+                    var x = document.createElement("img");
+                    x.src = "http://www.clker.com/cliparts/1/1/9/2/12065738771352376078Arnoud999_Right_or_wrong_5.svg.thumb.png";
+                    checkDiv.appendChild(x);
+                }
+                scoreP.innerHTML = "Score: " + score; 
             }
             
             function setRandomOrder(value){
                 if(randomSquares.indexOf(value) === -1){
                     randomSquares.push(value);
                     randomColors.push(currentColor[currentSquare.indexOf(value)]);
+                    randomLetters.push(letters[currentSquare.indexOf(value)].innerHTML);
                     return;
                 }
                 else{

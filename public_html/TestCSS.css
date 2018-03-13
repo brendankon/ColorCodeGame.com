@@ -13,12 +13,12 @@ h1 {
 #button {
      padding: 15px 50px;
      font-size: 18px;
-     font-family: arial;
+     font-family: Impact;
      margin: auto;
      display: block;
      background-color: black;
      color: white;
-     font-style: italic;
+     //font-style: italic;
 }
 
 #button:hover{
@@ -30,5 +30,6 @@ h1 {
     font-size: 150px;
     padding-top: 100px;
     text-align: center;
+    font-family: Impact;
 }
 
