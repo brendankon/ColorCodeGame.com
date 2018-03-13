@@ -15,6 +15,21 @@ and open the template in the editor.
         <p id ="countdown"> </p>
         <script>
             var countNum;
+            var coloredSquares = ["http://piq.codeus.net/static/media/userpics/piq_307148.png",
+                                  "http://piq.codeus.net/static/media/userpics/piq_307149.png", 
+                                  "http://piq.codeus.net/static/media/userpics/piq_307153.png",
+                                  "http://piq.codeus.net/static/media/userpics/piq_307156.png",
+                                  "http://piq.codeus.net/static/media/userpics/piq_307157.png",
+                                  "http://piq.codeus.net/static/media/userpics/piq_307151.png"];
+            var colors = ["#ff0000", "#ff800a", "#1c91ff", "#853aff", "#ff3fd5", "#57ff0a" ];
+            var threeWords = ["CAT", "DOG", "MUG", "BOY", "BYE", "BOY",
+                              "TRY", "PUG", "DAY", "HOP", "RED", "FOG", "DUG", "ZAP", "FOX", "BOX", "FAX"];
+            var currentSquare = [];
+            var currentColor = [];
+            var scoreP;
+            var scoreDiv;
+            var scoreText = document.createTextNode("Score: 0");
+            var score = 0;
             window.onload=function(){
                 var countdown = document.getElementById("countdown");
                 countdown.style.display="none";
@@ -53,7 +68,10 @@ and open the template in the editor.
                 document.body.appendChild(imgDiv);
                 for(var i = 0; i < 3; i++){
                     var emptySquare = document.createElement("img");
-                    emptySquare.src = "http://piq.codeus.net/static/media/userpics/piq_363646.png";
+                    var index = Math.floor((Math.random()*6)+0);
+                    var colorLink = coloredSquares[index];
+                    containsValue(colorLink);
+                    emptySquare.src = "http://piq.codeus.net/static/media/userpics/piq_307159.png";
                     emptySquare.style.verticalAlign = "middle";
                     emptySquare.style.paddingLeft = "20px";
                     emptySquare.style.paddingRight = "20px";
@@ -63,22 +81,50 @@ and open the template in the editor.
                 letterDiv.style.position = "relative";
                 letterDiv.style.height = "200px";
                 letterDiv.style.lineHeight = "200px";
-                letterDiv.style.transform = "translateY(+19%)";
+                letterDiv.style.transform = "translateY(+14%)";
                 letterDiv.style.textAlign = "center";
+                var string = threeWords[Math.floor((Math.random()*16)+0)];
                 for(var i = 0; i < 3; i++){
                     var letter = document.createElement("p");
-                    var c = document.createTextNode("C");
+                    var c = document.createTextNode(string.charAt(i));
                     letter.style.verticalAlign = "middle";
                     letter.style.display = "inline-block";
-                    letter.style.paddingLeft = "47px";
-                    letter.style.paddingRight = "47px";
-                    letter.style.color = "red";
-                    letter.style.font = "65px arial";
+                    letter.style.paddingLeft = "48px";
+                    letter.style.paddingRight = "48px";
+                    letter.style.color = currentColor[i];
+                    letter.style.font = "70px cambria";
                     letter.appendChild(c);
                     letterDiv.appendChild(letter);
                 }
                 letterDiv.style.zIndex = "2";
                 document.body.appendChild(letterDiv);
+                scoreDiv = document.createElement("div");
+                scoreDiv.style.position = "relative";
+                scoreDiv.style.height = "200px";
+                scoreDiv.style.lineHeight = "200px";
+                scoreDiv.style.transform = "translateY(-215%)";
+                scoreDiv.style.textAlign = "center";
+                scoreDiv.style.zIndex = "3";
+                scoreP = document.createElement("p");
+                scoreP.appendChild(scoreText);
+                scoreP.style.font = "80px arial";
+                scoreP.style.textAlign = "center";
+                scoreP.style.verticalAlign = "middle";
+                scoreDiv.appendChild(scoreP);
+                document.body.appendChild(scoreDiv);
+            }
+            
+            function containsValue(value){
+                if(currentSquare.indexOf(value) === -1){
+                    currentSquare.push(value);
+                    currentColor.push(colors[coloredSquares.indexOf(value)]);
+                    return;
+                }
+                else{
+                    var newValue = coloredSquares[Math.floor((Math.random()*6)+0)];
+                    containsValue(newValue);
+                    return;
+                }
             }
 
         </script>
