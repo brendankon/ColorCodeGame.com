@@ -1,13 +1,14 @@
 body {
     background: #c5f9e9;
-    font-family: arial;
 }
 
 h1 {
     font-size: 100px;
     text-align: center;
-    padding-top: 90px;
-    padding-bottom: 100px;
+    padding-top: 110px;
+    padding-bottom: 25px;
+    font-family: Impact;
+    letter-spacing: 18px;
 }
 
 #button {
