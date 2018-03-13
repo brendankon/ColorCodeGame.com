@@ -21,11 +21,15 @@ and open the template in the editor.
                                   "http://piq.codeus.net/static/media/userpics/piq_307156.png",
                                   "http://piq.codeus.net/static/media/userpics/piq_307157.png",
                                   "http://piq.codeus.net/static/media/userpics/piq_307151.png"];
-            var colors = ["#ff0000", "#ff800a", "#1c91ff", "#853aff", "#ff3fd5", "#57ff0a" ];
+            var colors = ["#fe0000", "#ff7701", "#007fff", "#7f00ff", "#ff00fe", "#55ff00" ];
             var threeWords = ["CAT", "DOG", "MUG", "BOY", "BYE", "BOY",
                               "TRY", "PUG", "DAY", "HOP", "RED", "FOG", "DUG", "ZAP", "FOX", "BOX", "FAX"];
             var currentSquare = [];
             var currentColor = [];
+            var emptySquares = [];
+            var letters = [];
+            var randomSquares = [];
+            var randomColors = [];
             var scoreP;
             var scoreDiv;
             var scoreText = document.createTextNode("Score: 0");
@@ -34,7 +38,7 @@ and open the template in the editor.
                 var countdown = document.getElementById("countdown");
                 countdown.style.display="none";
                 countNum = 4;
-            }
+            };
             
             function disappear(){
                 var title = document.getElementById("Title");
@@ -75,13 +79,14 @@ and open the template in the editor.
                     emptySquare.style.verticalAlign = "middle";
                     emptySquare.style.paddingLeft = "20px";
                     emptySquare.style.paddingRight = "20px";
+                    emptySquares.push(emptySquare);
                     imgDiv.appendChild(emptySquare);
                 }
                 var letterDiv = document.createElement("div");
                 letterDiv.style.position = "relative";
                 letterDiv.style.height = "200px";
                 letterDiv.style.lineHeight = "200px";
-                letterDiv.style.transform = "translateY(+14%)";
+                letterDiv.style.transform = "translateY(+16%)";
                 letterDiv.style.textAlign = "center";
                 var string = threeWords[Math.floor((Math.random()*16)+0)];
                 for(var i = 0; i < 3; i++){
@@ -92,8 +97,9 @@ and open the template in the editor.
                     letter.style.paddingLeft = "48px";
                     letter.style.paddingRight = "48px";
                     letter.style.color = currentColor[i];
-                    letter.style.font = "70px cambria";
+                    letter.style.font = "68px cambria";
                     letter.appendChild(c);
+                    letters.push(letter);
                     letterDiv.appendChild(letter);
                 }
                 letterDiv.style.zIndex = "2";
@@ -112,6 +118,7 @@ and open the template in the editor.
                 scoreP.style.verticalAlign = "middle";
                 scoreDiv.appendChild(scoreP);
                 document.body.appendChild(scoreDiv);
+                setTimeout(userGuess, 3500);
             }
             
             function containsValue(value){
@@ -123,6 +130,29 @@ and open the template in the editor.
                 else{
                     var newValue = coloredSquares[Math.floor((Math.random()*6)+0)];
                     containsValue(newValue);
+                    return;
+                }
+            }
+            
+            function userGuess(){
+                for(var i = 0; i < 3; i++){
+                    letters[i].innerHTML = "--";
+                    letters[i].style.color = "black";
+                    setRandomOrder(currentSquare[Math.floor((Math.random()*3)+0)]);
+                    emptySquares[i].src = randomSquares[i];
+                }
+                 
+            }
+            
+            function setRandomOrder(value){
+                if(randomSquares.indexOf(value) === -1){
+                    randomSquares.push(value);
+                    randomColors.push(currentColor[currentSquare.indexOf(value)]);
+                    return;
+                }
+                else{
+                    var newValue = currentSquare[Math.floor((Math.random()*3)+0)];
+                    setRandomOrder(newValue);
                     return;
                 }
             }
