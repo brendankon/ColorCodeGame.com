@@ -14,8 +14,7 @@ and open the template in the editor.
         <button id="button" onClick="disappear()">Start Game</button>
         <form id = "htf" action='HowToPlay.html'>
             <button id ='howToButton' type='submit'>How To Play</button>
-        </form>
-        <p id ="countdown"> </p>
+        </form>        <p id ="countdown"> </p>
         <script>
             var countNum;
             var coloredSquares = ["http://piq.codeus.net/static/media/userpics/piq_307148.png",
@@ -255,9 +254,9 @@ and open the template in the editor.
                     restartButton.onclick = function(){location.reload();};
                     restartDiv.appendChild(restartButton);
                     restartDiv.style.position = "relative";
-                    restartDiv.style.height = "150px";
-                    restartDiv.style.lineHeight = "150px";
-                    restartDiv.style.transform = "translateY(-270%)";
+                    restartDiv.style.height = "56px";
+                    restartDiv.style.lineHeight = "56px";
+                    restartDiv.style.transform = "translateY(-720%)";
                     restartDiv.style.textAlign = "center";
                     restartDiv.style.zIndex = "5";
                     document.body.appendChild(restartDiv);
@@ -285,10 +284,12 @@ and open the template in the editor.
                     letterCount = 4;
                     timeLimit = 4500;
                 }
-                if(levelCount === 9)
+                if(levelCount === 9){
                     letterCount = 5;
+                    timLimit = 5000;
+                }
                 
-                if(levelCount >= 13)
+                if(levelCount >= 13 && timeLimit >= 400)
                     timeLimit = timeLimit - 200;
                 startGame();
             }
