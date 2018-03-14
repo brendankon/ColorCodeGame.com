@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         <h1 id = "Title"> Color Code </h1>
         <button id="button" onClick="disappear()">Start</button>
-        <form action='HowToPlay.html'>
+        <form id = "htf" action='HowToPlay.html'>
             <button id ='howToButton' type='submit'>How To Play</button>
         </form>
         <p id ="countdown"> </p>
@@ -61,6 +61,8 @@ and open the template in the editor.
             function disappear(){
                 var title = document.getElementById("Title");
                 var onClick = document.getElementById("button");
+                var htpButton = document.getElementById("htf");
+                htpButton.style.display="none";
                 title.style.display="none";
                 onClick.style.display="none";
                 countDown();
