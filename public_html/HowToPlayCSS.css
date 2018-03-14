@@ -2,13 +2,21 @@ body {
     background: #c5f9e9;
 }
 
-h1 {
-    font-size: 100px;
+h1{
     text-align: center;
-    padding-top: 110px;
-    padding-bottom: 25px;
     font-family: Impact;
-    letter-spacing: 16px;
+    font-size: 60px;
+    letter-spacing: 6px;
+}
+
+div{
+    text-align: center;
+}
+
+p{
+    font-family: cambria;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 button {
@@ -21,19 +29,11 @@ button {
      color: white;
 }
 
-form{
-    padding-top: 20px;
-}
-
 button:hover{
      background-color: white;
      color: black;
 }
 
-#countdown{
-    font-size: 150px;
-    padding-top: 100px;
-    text-align: center;
-    font-family: Impact;
+form{
+    padding-top: 25px;
 }
-
