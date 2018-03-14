@@ -23,7 +23,13 @@ and open the template in the editor.
                                   "http://piq.codeus.net/static/media/userpics/piq_307151.png"];
             var colors = ["#fe0000", "#ff7701", "#007fff", "#7f00ff", "#ff00fe", "#55ff00" ];
             var threeWords = ["CAT", "DOG", "MUG", "BOY", "BYE", "BOY",
-                              "TRY", "PUG", "DAY", "HOP", "RED", "FOG", "DUG", "ZAP", "FOX", "BOX", "FAX"];
+                              "TRY", "PUG", "DAY", "HOP", "RED", "FOG", "DUG", "ZAP", "FOX", "BOX", "FAX", "PAW", "FAN", "LAP"];
+            var fourWords = ["FOUR", "JUMP", "FLOP", "CORN", "BACK", "GOAL", "CROP", "YARN",
+                             "WELP", "NOSE", "MORE", "CAPE", "DAYS", "YAWN", "DEAL", "REAL",
+                             "GUYS", "COPS", "JOKE", "HAZY"];
+            var fiveWords = ["QUACK", "JUMPS", "LAMBS", "KLUTZ", "JULEP", "CRAZY", "FUZED", "AGLET",
+                             "ARMED", "BLURS", "BLOCK", "COAST", "CORAL", "DECOY", "DELAY", "FAKER",
+                             "FLASH", "FOALS", "GROUP", "MACRO"];
             var currentSquare = [];
             var currentColor = [];
             var emptySquares = [];
@@ -38,8 +44,10 @@ and open the template in the editor.
             var scoreDiv;
             var letterDiv;
             var checkDiv;
-            var scoreText = document.createTextNode("Score: 0");
+            var letterCount = 3;
+            var levelCount = 1;
             var score = 0;
+            var timeLimit = 3500;
             window.onload=function(){
                 var countdown = document.getElementById("countdown");
                 countdown.style.display="none";
@@ -77,7 +85,7 @@ and open the template in the editor.
                 imgDiv.style.textAlign = "center";
                 imgDiv.style.zIndex = "1";
                 document.body.appendChild(imgDiv);
-                for(var i = 0; i < 3; i++){
+                for(var i = 0; i < letterCount; i++){
                     var emptySquare = document.createElement("img");
                     var index = Math.floor((Math.random()*6)+0);
                     var colorLink = coloredSquares[index];
@@ -95,8 +103,14 @@ and open the template in the editor.
                 letterDiv.style.lineHeight = "200px";
                 letterDiv.style.transform = "translateY(+16%)";
                 letterDiv.style.textAlign = "center";
-                var string = threeWords[Math.floor((Math.random()*16)+0)];
-                for(var i = 0; i < 3; i++){
+                var string;
+                if(letterCount === 3)
+                    string = threeWords[Math.floor((Math.random()*20)+0)];
+                else if(letterCount === 4)
+                    string = fourWords[Math.floor((Math.random()*20)+0)];
+                else if(letterCount === 5)
+                    string = fiveWords[Math.floor((Math.random()*20)+0)];
+                for(var i = 0; i < letterCount; i++){
                     var letter = document.createElement("p");
                     var c = document.createTextNode(string.charAt(i));
                     letter.style.verticalAlign = "middle";
@@ -119,13 +133,13 @@ and open the template in the editor.
                 scoreDiv.style.textAlign = "center";
                 scoreDiv.style.zIndex = "3";
                 scoreP = document.createElement("p");
-                scoreP.appendChild(scoreText);
+                scoreP.innerHTML = "Score: " + score;
                 scoreP.style.font = "80px Impact";
                 scoreP.style.textAlign = "center";
                 scoreP.style.verticalAlign = "middle";
                 scoreDiv.appendChild(scoreP);
                 document.body.appendChild(scoreDiv);
-                setTimeout(userGuess, 1000);
+                setTimeout(userGuess, timeLimit);
             }
             
             function containsValue(value){
@@ -142,14 +156,15 @@ and open the template in the editor.
             }
             
             function userGuess(){
-                for(var i = 0; i < 3; i++){
+                for(var i = 0; i < letterCount; i++){
                     letters[i].style.color = "black";
-                    setRandomOrder(currentSquare[Math.floor((Math.random()*3)+0)]);
+                    setRandomOrder(currentSquare[Math.floor((Math.random()*letterCount)+0)]);
                     emptySquares[i].src = randomSquares[i];
                 }
                 for(var i = 0; i < letters.length; i++){
                     letters[i].innerHTML = "_";
                 }
+                letters[0].style.color = "white";
                 guessing = true;
             }
             
@@ -157,15 +172,40 @@ and open the template in the editor.
                 if(evt.keyCode >= 65 && evt.keyCode <= 90 && guessing){
                     currentGuess = (String.fromCharCode(evt.keyCode));
                     letters[userGuesses.length].innerHTML = currentGuess;
+                    letters[userGuesses.length].style.color = "white";
                 }
                 
                 else if(evt.keyCode === 13 && guessing){
                     if(currentGuess !== null){
+                        letters[userGuesses.length].style.color = "black";
+                        if(userGuesses.length+1  <= letters.length-1)
+                            letters[userGuesses.length+1].style.color = "white";
                         userGuesses.push(currentGuess);
                         currentGuess = null;
-                        if(userGuesses.length === 3){
+                        if(userGuesses.length === letterCount){
                             checkEquality();
                         }
+                    }
+                }
+                
+                else if(evt.keyCode === 8 && guessing){
+                    if(userGuesses.length > 0){
+                        letters[userGuesses.length].innerHTML = "_";
+                        letters[userGuesses.length].style.color = "black";
+                        userGuesses.pop();
+                        if(userGuesses.length > 0){
+                            currentGuess = userGuesses[userGuesses.length-1];
+                            letters[userGuesses.length].style.color = "white";
+                        }
+                        else{ 
+                            currentGuess = null;
+                            letters[0].style.color = "white";
+                        }
+                    }
+                    else if(userGuesses.length === 0){
+                        currentGuess = null;
+                        letters[0].innerHTML = "_";
+                        letters[0].style.color = "white";
                     }
                 }
             }
@@ -191,18 +231,60 @@ and open the template in the editor.
                         score = score + 10;
                     }
                 }
-                
+                scoreP.innerHTML = "Score: " + score; 
                 if(equal){
                     var check = document.createElement("img");
                     check.src = "http://www.clker.com/cliparts/R/C/5/I/G/P/green-light-tick-mark-th.png";
                     checkDiv.appendChild(check);
+                    setTimeout(resetGame, 3000);
                 }
                 else{
                     var x = document.createElement("img");
                     x.src = "http://www.clker.com/cliparts/1/1/9/2/12065738771352376078Arnoud999_Right_or_wrong_5.svg.thumb.png";
                     checkDiv.appendChild(x);
+                    var restartDiv = document.createElement("div");
+                    var restartButton = document.createElement("button");
+                    var t = document.createTextNode("Exit");
+                    restartButton.appendChild(t);
+                    restartButton.onclick = function(){location.reload();};
+                    restartDiv.appendChild(restartButton);
+                    restartDiv.style.position = "relative";
+                    restartDiv.style.height = "150px";
+                    restartDiv.style.lineHeight = "150px";
+                    restartDiv.style.transform = "translateY(-270%)";
+                    restartDiv.style.textAlign = "center";
+                    restartDiv.style.zIndex = "5";
+                    document.body.appendChild(restartDiv);
                 }
-                scoreP.innerHTML = "Score: " + score; 
+            }
+            
+            function resetGame(){
+                var bod = document.body;
+                for(var i = 0; i < bod.childNodes.length; i++){
+                    if(bod.childNodes[i].nodeName === "DIV"){
+                        bod.removeChild(bod.childNodes[i]);
+                        i--;
+                    }
+                }
+                currentSquare = [];
+                currentColor = [];
+                emptySquares = [];
+                letters = [];
+                randomSquares = [];
+                randomColors = [];
+                userGuesses = [];
+                randomLetters = [];
+                levelCount++;
+                if(levelCount === 5){
+                    letterCount = 4;
+                    timeLimit = 4500;
+                }
+                if(levelCount === 9)
+                    letterCount = 5;
+                
+                if(levelCount >= 13)
+                    timeLimit = timeLimit - 200;
+                startGame();
             }
             
             function setRandomOrder(value){
@@ -213,7 +295,7 @@ and open the template in the editor.
                     return;
                 }
                 else{
-                    var newValue = currentSquare[Math.floor((Math.random()*3)+0)];
+                    var newValue = currentSquare[Math.floor((Math.random()*letterCount)+0)];
                     setRandomOrder(newValue);
                     return;
                 }

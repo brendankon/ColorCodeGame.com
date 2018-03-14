@@ -8,10 +8,10 @@ h1 {
     padding-top: 110px;
     padding-bottom: 25px;
     font-family: Impact;
-    letter-spacing: 18px;
+    letter-spacing: 16px;
 }
 
-#button {
+button {
      padding: 15px 50px;
      font-size: 18px;
      font-family: Impact;
@@ -22,7 +22,7 @@ h1 {
      //font-style: italic;
 }
 
-#button:hover{
+button:hover{
      background-color: white;
      color: black;
 }
