@@ -11,7 +11,7 @@ and open the template in the editor.
     </head>
     <body>
         <h1 id = "Title"> Color Code </h1>
-        <button id="button" onClick="disappear()">Start</button>
+        <button id="button" onClick="disappear()">Start Game</button>
         <form id = "htf" action='HowToPlay.html'>
             <button id ='howToButton' type='submit'>How To Play</button>
         </form>
@@ -26,13 +26,14 @@ and open the template in the editor.
                                   "http://piq.codeus.net/static/media/userpics/piq_307151.png"];
             var colors = ["#fe0000", "#ff7701", "#007fff", "#7f00ff", "#ff00fe", "#55ff00" ];
             var threeWords = ["CAT", "DOG", "MUG", "BOY", "BYE", "BOY",
-                              "TRY", "PUG", "DAY", "HOP", "RED", "FOG", "DUG", "ZAP", "FOX", "BOX", "FAX", "PAW", "FAN", "LAP"];
+                              "TRY", "PUG", "DAY", "HOP", "RED", "FOG", "DUG", "ZAP", "FOX", "BOX", "FAX", "PAW", "FAN", "LAP",
+                              "KEY", "SKY", "JAB", "DRY", "EGO"];
             var fourWords = ["FOUR", "JUMP", "FLOP", "CORN", "BACK", "GOAL", "CROP", "YARN",
                              "WELP", "NOSE", "MORE", "CAPE", "DAYS", "YAWN", "DEAL", "REAL",
-                             "GUYS", "COPS", "JOKE", "HAZY"];
+                             "GUYS", "COPS", "JOKE", "HAZY", "BAND", "BATH", "CODE", "GOLD", "OKAY"];
             var fiveWords = ["QUACK", "JUMPS", "LAMBS", "KLUTZ", "JULEP", "CRAZY", "FUZED", "AGLET",
                              "ARMED", "BLURS", "BLOCK", "COAST", "CORAL", "DECOY", "DELAY", "FAKER",
-                             "FLASH", "FOALS", "GROUP", "MACRO"];
+                             "FLASH", "FOALS", "GROUP", "MACRO", "ANGER", "ARGUE", "BREAD", "BROWN", "DROVE"];
             var currentSquare = [];
             var currentColor = [];
             var emptySquares = [];
@@ -110,11 +111,11 @@ and open the template in the editor.
                 letterDiv.style.textAlign = "center";
                 var string;
                 if(letterCount === 3)
-                    string = threeWords[Math.floor((Math.random()*20)+0)];
+                    string = threeWords[Math.floor((Math.random()*25)+0)];
                 else if(letterCount === 4)
-                    string = fourWords[Math.floor((Math.random()*20)+0)];
+                    string = fourWords[Math.floor((Math.random()*25)+0)];
                 else if(letterCount === 5)
-                    string = fiveWords[Math.floor((Math.random()*20)+0)];
+                    string = fiveWords[Math.floor((Math.random()*25)+0)];
                 for(var i = 0; i < letterCount; i++){
                     var letter = document.createElement("p");
                     var c = document.createTextNode(string.charAt(i));
