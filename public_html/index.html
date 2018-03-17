@@ -27,23 +27,26 @@ and open the template in the editor.
             var colors = ["#fe0000", "#ff7701", "#007fff", "#7f00ff", "#ff00fe", "#55ff00" ];
             var threeWords = ["CAT", "DOG", "MUG", "BOY", "BYE", "BOY",
                               "TRY", "PUG", "DAY", "HOP", "RED", "FOG", "DUG", "ZAP", "FOX", "BOX", "FAX", "PAW", "FAN", "LAP",
-                              "KEY", "SKY", "JAB", "DRY", "EGO"];
+                              "KEY", "SKY", "JAB", "DRY", "EGO", "COG", "CAB", "MOB", "ORB", "RAD"];
             var fourWords = ["FOUR", "JUMP", "FLOP", "CORN", "BACK", "GOAL", "CROP", "YARN",
                              "WELP", "NOSE", "MORE", "CAPE", "DAYS", "YAWN", "DEAL", "REAL",
-                             "GUYS", "COPS", "JOKE", "HAZY", "BAND", "BATH", "CODE", "GOLD", "OKAY"];
+                             "GUYS", "COPS", "JOKE", "HOME", "BAND", "BATH", "CODE", "GOLD", "OKAY",
+                             "BEAR", "COAX", "DEAR", "GUST", "KING"];
             var fiveWords = ["QUACK", "JUMPS", "LAMBS", "KLUTZ", "JULEP", "CRAZY", "FUZED", "AGLET",
                              "ARMED", "BLURS", "BLOCK", "COAST", "CORAL", "DECOY", "DELAY", "FAKER",
-                             "FLASH", "FOALS", "GROUP", "MACRO", "ANGER", "ARGUE", "BREAD", "BROWN", "DROVE"];
+                             "FLASH", "FOALS", "GROUP", "MACRO", "ANGER", "ARGUE", "BREAD", "BROWN", "DROVE",
+                             "BAKER", "BACKS", "CAMOS", "CHARD", "MEDIA"];
             var currentSquare = [];
             var currentColor = [];
             var emptySquares = [];
             var letters = [];
             var randomSquares = [];
             var randomColors = [];
-            var userGuesses = [];
+            var userGuesses = new Array(3).fill(null);
             var randomLetters = [];
             var currentGuess = null;
             var guessing = false;
+            var currentPos = 0;
             var scoreP;
             var scoreDiv;
             var letterDiv;
@@ -111,11 +114,11 @@ and open the template in the editor.
                 letterDiv.style.textAlign = "center";
                 var string;
                 if(letterCount === 3)
-                    string = threeWords[Math.floor((Math.random()*25)+0)];
+                    string = threeWords[Math.floor((Math.random()*30)+0)];
                 else if(letterCount === 4)
-                    string = fourWords[Math.floor((Math.random()*25)+0)];
+                    string = fourWords[Math.floor((Math.random()*30)+0)];
                 else if(letterCount === 5)
-                    string = fiveWords[Math.floor((Math.random()*25)+0)];
+                    string = fiveWords[Math.floor((Math.random()*30)+0)];
                 for(var i = 0; i < letterCount; i++){
                     var letter = document.createElement("p");
                     var c = document.createTextNode(string.charAt(i));
@@ -177,41 +180,38 @@ and open the template in the editor.
             function keyPressed(evt){
                 if(evt.keyCode >= 65 && evt.keyCode <= 90 && guessing){
                     currentGuess = (String.fromCharCode(evt.keyCode));
-                    letters[userGuesses.length].innerHTML = currentGuess;
-                    letters[userGuesses.length].style.color = "white";
+                    letters[currentPos].innerHTML = currentGuess;
+                    userGuesses[currentPos] = currentGuess;
+                }
+                
+                else if(evt.keyCode === 37 && guessing){
+                    if(currentPos > 0){
+                        letters[currentPos].style.color = "black";
+                        currentPos--;
+                        letters[currentPos].style.color = "white";
+                    }
+                }
+                
+                else if(evt.keyCode === 39 && guessing){
+                    if(currentPos < letters.length-1){
+                        letters[currentPos].style.color = "black";
+                        currentPos++;
+                        letters[currentPos].style.color = "white";
+                    }
                 }
                 
                 else if(evt.keyCode === 13 && guessing){
-                    if(currentGuess !== null){
-                        letters[userGuesses.length].style.color = "black";
-                        if(userGuesses.length+1  <= letters.length-1)
-                            letters[userGuesses.length+1].style.color = "white";
-                        userGuesses.push(currentGuess);
-                        currentGuess = null;
-                        if(userGuesses.length === letterCount){
-                            checkEquality();
-                        }
+                    var filled = true;                   
+                    for(var i = 0; i < userGuesses.length; i++){
+                        if(userGuesses[i] === null)
+                            filled = false;
                     }
-                }
-                
-                else if(evt.keyCode === 8 && guessing){
-                    if(userGuesses.length > 0){
-                        letters[userGuesses.length].innerHTML = "_";
-                        letters[userGuesses.length].style.color = "black";
-                        userGuesses.pop();
-                        if(userGuesses.length > 0){
-                            currentGuess = userGuesses[userGuesses.length-1];
-                            letters[userGuesses.length].style.color = "white";
+                    
+                    if(filled){
+                        for(var i = 0; i < letters.length; i++){
+                            letters[i].style.color = "black";
                         }
-                        else{ 
-                            currentGuess = null;
-                            letters[0].style.color = "white";
-                        }
-                    }
-                    else if(userGuesses.length === 0){
-                        currentGuess = null;
-                        letters[0].innerHTML = "_";
-                        letters[0].style.color = "white";
+                        checkEquality();
                     }
                 }
             }
@@ -278,8 +278,8 @@ and open the template in the editor.
                 letters = [];
                 randomSquares = [];
                 randomColors = [];
-                userGuesses = [];
                 randomLetters = [];
+                currentPos = 0;
                 levelCount++;
                 if(levelCount === 5){
                     letterCount = 4;
@@ -292,6 +292,7 @@ and open the template in the editor.
                 
                 if(levelCount >= 13 && timeLimit >= 400)
                     timeLimit = timeLimit - 200;
+                userGuesses = new Array(letterCount).fill(null);
                 startGame();
             }
             
