@@ -9,6 +9,8 @@ and open the template in the editor.
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
         <title>Color Code </title>
         <link href ="TestCSS.css" rel="stylesheet"/>
+        <meta name="description" content="Free to play memory game that's both easy to learn, and fun to play!">
+        <meta name="keywords" content="Games, Video Game, Online Game, Free to play game, Free to Play, Memory Game, Easy to learn, Addicting Game, Web Game">
     </head>
     <body>
         <h1 id = "Title"> Color Code </h1>
@@ -18,12 +20,12 @@ and open the template in the editor.
         </form>        <p id ="countdown"> </p>
         <script>
             var countNum;
-            var coloredSquares = ["http://piq.codeus.net/static/media/userpics/piq_307148.png",
-                                  "http://piq.codeus.net/static/media/userpics/piq_307149.png", 
-                                  "http://piq.codeus.net/static/media/userpics/piq_307153.png",
-                                  "http://piq.codeus.net/static/media/userpics/piq_307156.png",
-                                  "http://piq.codeus.net/static/media/userpics/piq_307157.png",
-                                  "http://piq.codeus.net/static/media/userpics/piq_307151.png"];
+            var coloredSquares = ["https://i.imgur.com/vKLtQHQ.png",
+                                  "https://i.imgur.com/ITJd3Om.png", 
+                                  "https://i.imgur.com/cQKSr3P.png",
+                                  "https://i.imgur.com/Ixq0igj.png",
+                                  "https://i.imgur.com/Ife8R8x.png",
+                                  "https://i.imgur.com/DDm8mij.png"];
             var colors = ["#fe0000", "#ff7701", "#007fff", "#7f00ff", "#ff00fe", "#55ff00" ];
             var threeWords = ["CAT", "DOG", "MUG", "BOY", "BYE", "BOY",
                               "TRY", "PUG", "DAY", "HOP", "RED", "FOG", "DUG", "ZAP", "FOX", "BOX", "FAX", "PAW", "FAN", "LAP",
@@ -99,7 +101,7 @@ and open the template in the editor.
                     var index = Math.floor((Math.random()*6)+0);
                     var colorLink = coloredSquares[index];
                     containsValue(colorLink);
-                    emptySquare.src = "http://piq.codeus.net/static/media/userpics/piq_307159.png";
+                    emptySquare.src = "https://i.imgur.com/4OoWZwV.png";
                     emptySquare.style.verticalAlign = "middle";
                     emptySquare.style.paddingLeft = "20px";
                     emptySquare.style.paddingRight = "20px";
@@ -230,10 +232,10 @@ and open the template in the editor.
                 for(var i = 0; i < userGuesses.length; i++){
                     if(userGuesses[i] !== randomLetters[i]){
                         equal = false;
-                        emptySquares[i].src = "http://piq.codeus.net/static/media/userpics/piq_307148.png";
+                        emptySquares[i].src = "https://i.imgur.com/vKLtQHQ.png";
                     }
                     else{
-                        emptySquares[i].src = "http://piq.codeus.net/static/media/userpics/piq_307151.png";
+                        emptySquares[i].src = "https://i.imgur.com/DDm8mij.png";
                         score = score + 10;
                     }
                 }
