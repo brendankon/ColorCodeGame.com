@@ -29,9 +29,9 @@ and open the template in the editor.
             var colors = ["#fe0000", "#ff7701", "#007fff", "#7f00ff", "#ff00fe", "#55ff00" ];
             var threeWords = ["CAT", "DOG", "MUG", "BOY", "BYE", "BOY",
                               "TRY", "PUG", "DAY", "HOP", "RED", "FOG", "DUG", "ZAP", "FOX", "BOX", "FAX", "PAW", "FAN", "LAP",
-                              "KEY", "SKY", "JAB", "DRY", "EGO", "COG", "CAB", "MOB", "ORB", "RAD"];
+                              "KEY", "SKY", "BUG", "DRY", "EGO", "COG", "CAB", "MOB", "ORB", "RAD"];
             var fourWords = ["FOUR", "JUMP", "FLOP", "CORN", "BACK", "GOAL", "CROP", "YARN",
-                             "WELP", "NOSE", "MORE", "CAPE", "DAYS", "YAWN", "DEAL", "REAL",
+                             "SLAY", "NOSE", "MORE", "CAPE", "DAYS", "YAWN", "DEAL", "REAL",
                              "GUYS", "COPS", "JOKE", "HOME", "BAND", "BATH", "CODE", "GOLD", "OKAY",
                              "BEAR", "COAX", "DEAR", "GUST", "KING"];
             var fiveWords = ["QUACK", "JUMPS", "LAMBS", "KLUTZ", "JULEP", "CRAZY", "FUZED", "AGLET",
@@ -132,6 +132,8 @@ and open the template in the editor.
                     letter.style.font = "68px Impact";
                     letter.appendChild(c);
                     letters.push(letter);
+                    letter.onclick = function(){mouseClick(letters.indexOf(this));};
+                    letter.style.hover = 
                     letterDiv.appendChild(letter);
                 }
                 letterDiv.style.zIndex = "2";
@@ -218,6 +220,16 @@ and open the template in the editor.
                 }
             }
             
+            function mouseClick(letterIndex){
+                if(guessing){
+                    currentPos=letterIndex;
+                    for(var i = 0; i < letters.length; i++){
+                        letters[i].style.color = "black";
+                    }
+                    letters[currentPos].style.color = "white";
+                }
+            }
+            
             function checkEquality(){
                 guessing = false;
                 var equal = true;
@@ -293,7 +305,7 @@ and open the template in the editor.
                 }
                 
                 if(levelCount >= 13 && timeLimit >= 400)
-                    timeLimit = timeLimit - 200;
+                    timeLimit = timeLimit - 400;
                 userGuesses = new Array(letterCount).fill(null);
                 startGame();
             }

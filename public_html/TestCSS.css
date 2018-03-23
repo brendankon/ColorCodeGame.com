@@ -28,6 +28,15 @@ form{
 button:hover{
      background-color: white;
      color: black;
+     cursor: pointer;
+}
+
+p:hover{
+    cursor: default;
+}
+
+h1:hover{
+    cursor: default;
 }
 
 #countdown{
